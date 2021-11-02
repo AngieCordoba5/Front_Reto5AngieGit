@@ -31,6 +31,7 @@ function pintarRespuesta2(respuesta){
         myTable+="<td>"+respuesta[i].name+"</td>";
         myTable+="<td>"+respuesta[i].age+"</td>";
         myTable+="<td> <button onclick=' actualizarInformacionCliente("+respuesta[i].idClient+")'>Actualizar</button>";
+        myTable+="<td> <button onclick='cargarDatosCliente("+respuesta[i].idClient+")'>Editar</button>";
         myTable+="<td> <button onclick='borrarCliente("+respuesta[i].idClient+")'>Borrar</button>";
         myTable+="</tr>";
     }
@@ -124,4 +125,23 @@ function borrarCliente(idElemento){
         }
     });
 
+}
+//Función para editar Clientes
+function cargarDatosCliente(id) {
+    $.ajax({
+        dataType: 'json',
+        url:"http://129.151.118.90:8080/api/Client/"+id,
+        type: 'GET',
+
+        success: function (response) {
+            console.log(response);
+            var item = response;
+            $("#Clemail").val(item.email);
+            $("#Clpassword").val(item.password);
+            $("#Clname").val(item.name);
+            $("#Clage").val(item.age);
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+        }
+    });
 }

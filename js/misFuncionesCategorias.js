@@ -23,6 +23,7 @@ function pintarRespuesta(respuesta){
         myTable+="<td>"+respuesta[i].name+"</td>";
         myTable+="<td>"+respuesta[i].description+"</td>";
         myTable+="<td> <button onclick=' actualizarInformacionCategorias("+respuesta[i].id+")'>Actualizar</button>";
+        myTable+="<td> <button onclick='cargarDatosCategoria("+respuesta[i].id+")'>Editar</button>";
         myTable+="<td> <button onclick='borrarCategoria("+respuesta[i].id+")'>Borrar</button>";
         myTable+="</tr>";
     }
@@ -120,4 +121,21 @@ function borrarCategoria(idElemento){
         }
     });
 
+}
+//Función para editar Categoria
+function cargarDatosCategoria(id) {
+    $.ajax({
+        dataType: 'json',
+        url:"http://129.151.118.90:8080/api/Category/"+id,
+        type: 'GET',
+
+        success: function (response) {
+            console.log(response);
+            var item = response;
+            $("#Cname").val(item.name);
+            $("#Cdescription").val(item.description);
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+        }
+    });
 }

@@ -62,6 +62,7 @@ function pintarRespuestaMensajes(respuesta){
         myTable+="<td>"+respuesta[i].cabin.name+"</td>";
         myTable+="<td>"+respuesta[i].client.name+"</td>";
         myTable+="<td> <button onclick=' actualizarInformacionMensaje("+respuesta[i].idMessage+")'>Actualizar</button>";
+        myTable+="<td> <button onclick='cargarDatosMensajes("+respuesta[i].idMessage+")'>Editar</button>";
         myTable+="<td> <button onclick='borrarMensaje("+respuesta[i].idMessage+")'>Borrar</button>";
         myTable+="</tr>";
     }
@@ -147,4 +148,21 @@ function borrarMensaje(idElemento){
         }
     });
 
+}
+
+//Función para editar Mensajes
+function cargarDatosMensajes(id) {
+    $.ajax({
+        dataType: 'json',
+        url:"http://129.151.118.90:8080/api/Message/"+id,
+        type: 'GET',
+
+        success: function (response) {
+            console.log(response);
+            var item = response;
+            $("#messagetext").val(item.messageText);
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+        }
+    });
 }
